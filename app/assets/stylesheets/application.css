@@ -13,7 +13,6 @@
  *= require bootstrap
  *= require main
  *= require snippets
- *= require home
  *= require codemirror
  *= require_self
  */

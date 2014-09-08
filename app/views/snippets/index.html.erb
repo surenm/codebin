@@ -1,0 +1,8 @@
+<div class="row">
+  <% @snippets.each do |snippet| %>
+      <%= link_to 'Show', snippet %>
+      <%= link_to 'Edit', edit_snippet_path(snippet) %>
+      <%= link_to 'Destroy', snippet, method: :delete, data: { confirm: 'Are you sure?' } %>
+  <% end %>
+</div>
+
