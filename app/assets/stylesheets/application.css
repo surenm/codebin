@@ -10,6 +10,40 @@
  * defined in the other CSS/SCSS files in this directory. It is generally better to create a new
  * file per style scope.
  *
- *= require_tree .
+ *= require bootstrap
+ *= require main
+ *= require snippets
+ *= require home
+ *= require codemirror
  *= require_self
  */
+
+
+html, body {
+  height: 90%
+}
+
+.logo {  
+  margin-top: 5px;
+  font-size: 25px;
+  float: left;
+  font-family: "Raleway";
+  font-weight: 400;
+  text-transform: uppercase;
+}
+
+.logo small {
+  text-transform: capitalize;
+  font-size: 16px;
+  color: #aaa;
+  display: block;
+  margin-top: 5px;
+}
+
+.left {
+  float: left;
+}
+
+.right {
+  float: right;
+}
