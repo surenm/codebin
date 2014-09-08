@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  resources :snippets
+
   devise_for :users, :controllers => { :omniauth_callbacks => 'auth'}
 
   devise_scope :user do
