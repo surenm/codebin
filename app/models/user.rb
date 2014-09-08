@@ -1,6 +1,8 @@
 class User < ActiveRecord::Base
   devise :database_authenticatable, :registerable, :trackable, :validatable, :omniauthable, :timeoutable
 
+  has_many :snippets
+
   def self.find_by_email(email)
     user = User.where(:email => email).first
   end

@@ -1,0 +1,44 @@
+// Place all the styles related to the Snippets controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+
+.codebin-area {
+  margin: 50px 0px;
+}
+
+#snippet-wrapper {
+  min-height: 400px;
+
+  .CodeMirror {
+    height: 500px;
+    font-size: 14px;
+    border: 1px solid #d8d8d8;
+  }
+
+  .CodeMirror-lines {
+    padding: 8px 0px;
+  }
+
+  .header {
+    background-color: #74cfae;
+    padding: 5px;
+
+    input {
+      height: 25px;
+      font-size: 14px;
+    }
+  }
+
+  .actions {
+    margin: 20px 0px;
+  }
+}
+
+#output-wrapper {
+  height: 300px;
+}
+
+.output-area {
+  background-color: #4e4e4e;  
+  height: 100%;
+}
