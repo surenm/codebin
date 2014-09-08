@@ -14,5 +14,5 @@ Rails.application.routes.draw do
   get "/users"         => redirect("/signup")
 
 
-  root to: "home#index"
+  root to: "snippets#new"
 end

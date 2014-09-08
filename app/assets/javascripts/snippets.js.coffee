@@ -6,7 +6,7 @@ $(document).ready () ->
   console.log("hello world")
   window.codeMirror = CodeMirror.fromTextArea($("#snippet-area").get(0), {
     value: "function myScript(){return 100;}\n"
-    mode:  "javascript"
+    mode:  "ruby"
     lineNumbers: true
     autofocus: true
   });

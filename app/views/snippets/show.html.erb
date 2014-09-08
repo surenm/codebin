@@ -1,4 +1,9 @@
-<p id="notice"><%= notice %></p>
-
-<%= link_to 'Edit', edit_snippet_path(@snippet) %> |
-<%= link_to 'Back', snippets_path %>
+<div class="codebin-area row">
+  <div id="snippet-wrapper" class="col-md-7">
+    <%= render 'form' %>
+  </div>
+  <div id="output-wrapper" class="col-md-5">
+    <div class="output-area">
+    </div>
+  </div>
+</div>

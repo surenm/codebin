@@ -16,6 +16,7 @@
 //= require bootstrap
 //= require codemirror
 //= require mode/javascript/javascript
+//= require mode/ruby/ruby
 
 
 //= require snippets

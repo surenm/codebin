@@ -4,7 +4,7 @@
       <%= f.text_field :name, placeholder: "Name for this snippet" %>
     </div>
     <div class="right">
-      <%= f.label
+      <%= f.label :language, "Choose language" %>
       <%= f.select :language, options_for_select(available_languages) %>
     </div>
     <div class="clearfix"></div>

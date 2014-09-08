@@ -4,6 +4,19 @@
 
 .codebin-area {
   margin: 50px 0px;
+
+  label {
+    color: #fff;
+    font-size: 14px;
+    margin: 0px 5px;
+  }
+
+  input {
+    font-size: 14px;
+  }
+  input[type=text] {
+    padding: 3px 5px;
+  }
 }
 
 #snippet-wrapper {
@@ -22,11 +35,6 @@
   .header {
     background-color: #74cfae;
     padding: 5px;
-
-    input {
-      height: 25px;
-      font-size: 14px;
-    }
   }
 
   .actions {
@@ -39,6 +47,6 @@
 }
 
 .output-area {
-  background-color: #4e4e4e;  
+  background-color: #4e4e4e;
   height: 100%;
 }
