@@ -11,10 +11,21 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140908161831) do
+ActiveRecord::Schema.define(version: 20140911170116) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "containers", force: true do |t|
+    t.integer  "snippet_id"
+    t.string   "image"
+    t.string   "container_id"
+    t.boolean  "clean_exit"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "containers", ["container_id"], name: "index_containers_on_container_id", using: :btree
 
   create_table "snippets", force: true do |t|
     t.integer  "user_id"

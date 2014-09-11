@@ -16,6 +16,9 @@ gem 'spring', group: :development
 gem 'devise'
 gem 'omniauth-openid'
 gem 'binding_of_caller'
+gem 'docker-api', :require => 'docker', github: 'swipely/docker-api'
+gem "resque"
+gem 'resque-cleaner'
 
 group :development, :test do
   gem 'rspec-rails', '~> 3.0.0.beta'
