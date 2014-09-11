@@ -1,6 +1,6 @@
 module SnippetsHelper
 
   def available_languages
-    Snippet::AVAILABLE_LANGUAGES.map {|lang, lang_display_name| [lang_display_name, lang] }
+    Snippet::AVAILABLE_LANGUAGES.map {|lang, lang_attributes| [lang_attributes[:display], lang] }
   end
 end
