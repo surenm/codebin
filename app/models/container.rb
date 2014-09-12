@@ -18,7 +18,7 @@ class Container < ActiveRecord::Base
   end
 
   def snippet_file_path
-    File.join "/run", "code.#{snippet.extension}"
+    File.join "/codebin", "code.#{snippet.extension}"
   end
 
   def input_file_path
@@ -53,11 +53,10 @@ class Container < ActiveRecord::Base
     create_io_files()
 
     docker_container = Docker::Container.create(
-      Image: image,
-      Cmd: "ls -la",
-      HostConfig: {
-        Binds: ["#{host_path_for_volume}:/code"]
-      }
+      Image: 'codebin/ruby',
+      Cmd: ['/bin/run', 'ruby', snippet_file_path],
+      OpenStdin: true,
+      StdinOnce: true
     )
 
     self.container_id = docker_container.id
@@ -65,9 +64,11 @@ class Container < ActiveRecord::Base
   end
 
   def run
-    output, error = container.tap(&:start).attach(stdin: StringIO.new(input))
+    output, error = container.tap {|c| c.start({Binds: ["#{host_path_for_volume}:/codebin"]})}.attach(stdin: StringIO.new(input))
+
     File.write(output_file_path, output.join)
     File.write(error_file_path, error.join)
+
     destroy!
   end
 
