@@ -81,6 +81,7 @@ class Container < ActiveRecord::Base
   end
 
   def destroy_docker_container!
+    sleep 1.seconds
     docker_container.delete force: true
   end
 
