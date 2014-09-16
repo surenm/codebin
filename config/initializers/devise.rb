@@ -1,8 +1,8 @@
 # Use this hook to configure devise mailer, warden hooks and so forth.
 # Many of these configuration options can be set straight in your model.
 Devise.setup do |config|
-  require 'openid/store/filesystem'
-  config.omniauth :open_id, :store => OpenID::Store::Filesystem.new('/tmp'), :name => 'google_openid', :identifier => 'https://www.google.com/accounts/o8/id', :require => 'omniauth-openid'
+  config.omniauth :github, ENV['GITHUB_APP_KEY'], ENV['GITHUB_APP_SECRET']
+
   # The secret key used by Devise. Devise uses this key to generate
   # random tokens. Changing this key will render invalid all existing
   # confirmation, reset password and unlock tokens in the database.

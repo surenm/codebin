@@ -46,3 +46,7 @@ html, body {
 .right {
   float: right;
 }
+
+.navbar-default .navbar-nav > li > a.signedin {
+  padding: 0px;
+}

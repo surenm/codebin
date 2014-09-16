@@ -39,8 +39,13 @@
     </div>
     <div class="navbar-collapse collapse">
       <ul class="nav navbar-nav navbar-right">
-      <li class="active"><a href="/snippets/new">+ New Snippet</a></li>
-      <li><a href="#how-it-works">How it works</a></li>
+      <!-- <li class="active"><a href="/snippets/new">+ New Snippet</a></li> -->
+
+      <% if current_user %>
+      <li><a class="signedin" href="#"><img class="dp" src="<%= current_user.dp %>">Hello! <%= current_user.nick %></a></li>
+      <% else %>
+      <li class="active"><%= link_to "+ Sign in With Github", user_omniauth_authorize_path(:github) %></li>
+      <% end %>
       </ul>
     </div><!--/.nav-collapse -->
     </div>

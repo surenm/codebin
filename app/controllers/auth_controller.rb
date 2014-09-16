@@ -14,7 +14,7 @@ class AuthController < Devise::OmniauthCallbacksController
     return root_path
   end
 
-  def google_openid
+  def github
     omniauth = request.env["omniauth.auth"]
     user = User.find_or_create_user omniauth
     sign_in_and_redirect user, :event => :authentication

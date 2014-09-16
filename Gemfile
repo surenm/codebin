@@ -14,7 +14,7 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 gem 'spring', group: :development
 
 gem 'devise'
-gem 'omniauth-openid'
+gem 'omniauth-github'
 gem 'binding_of_caller'
 gem 'docker-api', :require => 'docker', github: 'swipely/docker-api'
 gem "resque"

@@ -13,13 +13,12 @@ class User < ActiveRecord::Base
 
   def self.find_or_create_user(access_token)
     data = access_token.info
-    puts access_token
 
     if user_exists? data["email"]
       user = User.find_by_email data["email"]
     else
-      user = User.create! :email => data["email"],
-        :password => Devise.friendly_token[0,20]
+      user = User.create! email: data["email"], name: data["name"], nick: data["nickname"], dp: data["image"],
+                          password: Devise.friendly_token[0,20]
     end
 
     return user

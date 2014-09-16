@@ -49,4 +49,17 @@
 .output-area {
   background-color: #4e4e4e;
   height: 100%;
+
+  pre {
+    color: #fff;
+    background: #4e4e4e;
+    border: 0px;
+  }
+}
+
+img.dp {
+  height: 40px;
+  width: 40px;
+  border-radius: 30px;
+  margin-right: 10px;
 }
