@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140915221342) do
+ActiveRecord::Schema.define(version: 20140916153046) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -70,11 +70,8 @@ ActiveRecord::Schema.define(version: 20140915221342) do
   create_table "games", force: true do |t|
     t.integer  "player_a_id"
     t.integer  "player_b_id"
-    t.integer  "snippet_engine_id"
-    t.integer  "snippet_a_id"
-    t.integer  "snippet_b_id"
     t.integer  "game_type_id"
-    t.string   "status"
+    t.string   "status",       default: "waiting"
     t.text     "log"
     t.datetime "created_at"
     t.datetime "updated_at"
