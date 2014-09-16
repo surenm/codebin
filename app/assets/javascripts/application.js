@@ -17,6 +17,8 @@
 //= require codemirror
 //= require mode/javascript/javascript
 //= require mode/ruby/ruby
-
+//= require json2
+//= require underscore-min
+//= require backbone-min
 
 //= require snippets

@@ -1,12 +1,25 @@
-# Place all the behaviors and hooks related to the matching controller here.
-# All this logic will automatically be available in application.js.
-# You can use CoffeeScript in this file: http://coffeescript.org/
+class SnippetView extends Backbone.View
+  el: ".codebin-area"
+
+  initialize: () ->
+    @snippet_el = $("#snippet-area")
+    @output_el = $(@el).find(".output-area")
+    window.codeMirror = CodeMirror.fromTextArea(@snippet_el.get(0), {
+      value: "function myScript(){return 100;}\n"
+      mode:  "ruby"
+      lineNumbers: true
+      autofocus: true
+    })
+
+class SnippetModel extends Backbone.Model
+  url: () ->
+    "/snippets/#{@get('id')}"
+
+  initialize: () ->
+    @fetch()
+
+  hasCompleted: () ->
+    @get('status') == "completed"
 
 $(document).ready () ->
-  console.log("hello world")
-  window.codeMirror = CodeMirror.fromTextArea($("#snippet-area").get(0), {
-    value: "function myScript(){return 100;}\n"
-    mode:  "ruby"
-    lineNumbers: true
-    autofocus: true
-  });
+  new SnippetView()
