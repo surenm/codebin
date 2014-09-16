@@ -3,7 +3,9 @@ class SnippetRunnerWorker
 
   def self.perform(snippet_id)
     snippet = Snippet.find(snippet_id)
-    container = Container.create image: "codebin/#{snippet.language}", snippet: snippet
-    container.execute
+    if snippet.container.nil?
+      container = Container.create image: "codebin/#{snippet.language}", snippet: snippet
+    end
+    snippet.container.execute
   end
 end

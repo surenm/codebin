@@ -85,9 +85,18 @@ class Container < ActiveRecord::Base
   end
 
   def execute
+    puts "Creating Files..."
     create_files
+
+    puts "Creating docker container..."
     create_docker_container
+
+    puts "Running docker container..."
     run_docker_container
+
+    puts "Finishing up..."
     destroy_docker_container!
+
+    puts "Done."
   end
 end
