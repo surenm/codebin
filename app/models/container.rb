@@ -3,7 +3,7 @@ require 'timeout'
 
 class Container < ActiveRecord::Base
   belongs_to :snippet
-  RUN_VOLUMES_ROOT = File.join "/tmp", "run"
+  RUN_VOLUMES_ROOT = File.join "/mnt", "codebin"
 
   def host_dir_path
     File.join Container::RUN_VOLUMES_ROOT, "#{id}"
@@ -78,6 +78,9 @@ class Container < ActiveRecord::Base
 
     File.write(output_file_path, output.join)
     File.write(error_file_path, error.join)
+    snippet.output = output.join
+    snippet.error = error.join
+    snippet.save!
   end
 
   def destroy_docker_container!

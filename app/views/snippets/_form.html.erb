@@ -1,11 +1,11 @@
 <%= form_for(@snippet) do |f| %>
   <div class="header">
     <div class="left">
-      <%= f.text_field :name, placeholder: "Name for this snippet" %>
+      <%= f.text_field :name, placeholder: "Name for this snippet", value: @snippet.name %>
     </div>
     <div class="right">
       <%= f.label :language, "Choose language" %>
-      <%= f.select :language, options_for_select(available_languages) %>
+      <%= f.select :language, options_for_select(available_languages, @snippet.language) %>
     </div>
     <div class="clearfix"></div>
   </div>

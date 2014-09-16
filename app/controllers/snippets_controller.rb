@@ -45,6 +45,9 @@ class SnippetsController < ApplicationController
   def update
     respond_to do |format|
       if @snippet.update(snippet_params)
+        @snippet.output = ""
+        @snippet.error = ""
+        @snippet.save!
         Resque.enqueue SnippetRunnerWorker, @snippet.id
         format.html { redirect_to @snippet, notice: 'Snippet was successfully updated.' }
         format.json { render :show, status: :ok, location: @snippet }
