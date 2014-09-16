@@ -21,6 +21,8 @@ gem 'resque'
 gem 'resque-cleaner'
 gem 'resque-web', require: 'resque_web'
 
+gem 'activeadmin', github: 'activeadmin'
+
 group :development, :test do
   gem 'rspec-rails', '~> 3.0.0.beta'
   gem 'capistrano'
