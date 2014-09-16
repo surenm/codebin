@@ -1,5 +1,5 @@
 class Snippet < ActiveRecord::Base
-  belongs_to :user
+  belongs_to :game
   has_one :container
 
   AVAILABLE_LANGUAGES = {
