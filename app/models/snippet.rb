@@ -3,12 +3,16 @@ class Snippet < ActiveRecord::Base
   has_one :container
 
   AVAILABLE_LANGUAGES = {
-    ruby: {display: "Ruby", extension: 'rb'},
-    python: {display: "Python", extension: 'py'}
+    ruby: {display: "Ruby", extension: 'rb', executable: 'ruby'},
+    python: {display: "Python", extension: 'py', executable: 'python'}
   }
 
   def extension
-    AVAILABLE_LANGUAGES[language.to_sym][:extension] rescue 'txt'
+    AVAILABLE_LANGUAGES[language.to_sym][:extension] rescue ''
+  end
+
+  def executable
+    AVAILABLE_LANGUAGES[language.to_sym][:executable] rescue ''
   end
 
   STATE_QUEUED = :queued

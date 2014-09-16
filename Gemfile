@@ -17,8 +17,9 @@ gem 'devise'
 gem 'omniauth-github'
 gem 'binding_of_caller'
 gem 'docker-api', :require => 'docker', github: 'swipely/docker-api'
-gem "resque"
+gem 'resque'
 gem 'resque-cleaner'
+gem 'resque-web', require: 'resque_web'
 
 group :development, :test do
   gem 'rspec-rails', '~> 3.0.0.beta'

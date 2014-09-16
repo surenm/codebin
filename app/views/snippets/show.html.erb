@@ -4,6 +4,10 @@
   </div>
   <div id="output-wrapper" class="col-md-5">
     <div class="output-area">
+      <%- if @snippet.container %>
+      <pre><%= "#{@snippet.container.output}" %></pre>
+      <% end %>
+
     </div>
   </div>
 </div>

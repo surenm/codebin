@@ -44,7 +44,7 @@ class Container < ActiveRecord::Base
     FileUtils.touch error_file_path
   end
 
-  def container
+  def docker_container
     Docker::Container.get(container_id)
   end
 
@@ -52,23 +52,31 @@ class Container < ActiveRecord::Base
     create_snippet_file()
     create_io_files()
 
-    docker_container = Docker::Container.create(
-      Image: 'codebin/ruby',
-      Cmd: ['/bin/run', 'ruby', snippet_file_path],
+    _container = Docker::Container.create(
+      Image: "codebin/#{snippet.language}",
+      Cmd: ['/bin/run', snippet.executable, snippet_file_path],
       OpenStdin: true,
       StdinOnce: true
     )
 
-    self.container_id = docker_container.id
+    self.container_id = _container.id
     self.save!
   end
 
   def run
-    output, error = container.tap {|c| c.start({Binds: ["#{host_path_for_volume}:/codebin"]})}.attach(stdin: StringIO.new(input))
+    output, error = docker_container.tap {|c| c.start({Binds: ["#{host_path_for_volume}:/codebin"]})}.attach(stdin: StringIO.new(input))
 
     File.write(output_file_path, output.join)
     File.write(error_file_path, error.join)
+  end
 
+  def destroy!
+    docker_container.delete force: true
+  end
+
+  def execute
+    create
+    run
     destroy!
   end
 
@@ -82,9 +90,5 @@ class Container < ActiveRecord::Base
 
   def error
     File.read(error_file_path)
-  end
-
-  def destroy!
-    container.delete force: true
   end
 end

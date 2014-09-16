@@ -30,7 +30,7 @@ class SnippetsController < ApplicationController
 
     respond_to do |format|
       if @snippet.save
-        SnippetRunnerWorker.perform(@snippet.id)
+        Resque.enqueue SnippetRunnerWorker, @snippet.id
         format.html { redirect_to @snippet, notice: 'Snippet was successfully created.' }
         format.json { render :show, status: :created, location: @snippet }
       else
