@@ -83,8 +83,12 @@ class Container < ActiveRecord::Base
     self.save!
   end
 
-  def run_docker_container
-    output, error = docker_container.tap {|c| c.start({Binds: ["#{host_dir_path}:/#{docker_dir_path}"]})}.attach(stdin: StringIO.new(input))
+  def run_docker_container(custom_binds = {})
+    binds = ["#{host_dir_path}:#{docker_dir_path}"]
+    custom_binds.each do |bind|
+      binds.push "#{bind[:host_path]}:#{bind[:docker_path]}"
+    end
+    output, error = docker_container.tap {|c| c.start({Binds: binds})}.attach(stdin: StringIO.new(input))
 
     File.write(output_file_path, output.join)
     File.write(error_file_path, error.join)
