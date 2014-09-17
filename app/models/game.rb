@@ -13,9 +13,19 @@ class Game < ActiveRecord::Base
     [STATUS_WAITING, STATUS_QUEUED, STATUS_RUNNING, STATUS_COMPLETED]
   end
 
+  def snippet_engine
+    self.snippets.where(user: nil).first
+  end
+
+  def snippet_a
+    self.snippets.where(user: player_a).first
+  end
+
+  def snippet_b
+    self.snippets.where(user: player_b).first
+  end
+
   def ready?
-    snippet_a = self.snippets.where(user: player_a)
-    snippet_b = self.snippets.where(user: player_b)
     snippet_a.present? && snippet_b.present?
   end
 
