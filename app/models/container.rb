@@ -47,6 +47,8 @@ class Container < ActiveRecord::Base
 
   def create_host_file(file_name, code)
     FileUtils.mkdir_p host_dir_path if not Dir.exists? host_dir_path
+    file_dir = File.dirname file_name
+    FileUtils.mkdir_p file_dir if not Dir.exists? file_dir
     File.write host_file_path(file_name), code
   end
 
