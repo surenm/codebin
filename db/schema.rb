@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140916153046) do
+ActiveRecord::Schema.define(version: 20140916154634) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -65,6 +65,7 @@ ActiveRecord::Schema.define(version: 20140916153046) do
     t.string "engine_image"
     t.string "allowed_player_images"
     t.text   "rules"
+    t.string "engine_code_github"
   end
 
   create_table "games", force: true do |t|

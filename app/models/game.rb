@@ -22,4 +22,17 @@ class Game < ActiveRecord::Base
   def name
     "Game #{id} - #{player_a.name} & #{player_b.name}"
   end
+
+  def game_code_path
+    "#{Container::RUN_VOLUMES_ROOT}/#{game_type.name.upcase}"
+  end
+
+  def checkout_game_code
+    puts self.game_type.engine_code_github
+    if Dir.exists? game_code_path
+      `cd #{game_code_path} && git fetch origin && git reset --hard origin/master`
+    else
+      `git clone #{game_type.engine_code_github} #{game_code_path}`
+    end
+  end
 end

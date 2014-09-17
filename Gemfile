@@ -20,7 +20,6 @@ gem 'docker-api', :require => 'docker', github: 'swipely/docker-api'
 gem 'resque'
 gem 'resque-cleaner'
 gem 'resque-web', require: 'resque_web'
-
 gem 'activeadmin', github: 'activeadmin'
 
 group :development, :test do
