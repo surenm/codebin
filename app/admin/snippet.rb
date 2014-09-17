@@ -1,5 +1,5 @@
 ActiveAdmin.register Snippet do
-  permit_params :user_id, :game_id, :code, :status, :input, :output, :error, :name
+  permit_params :user_id, :game_id, :code, :status, :input, :output, :error, :name, :language
 
   form do |f|
     f.inputs 'Belongs to' do
@@ -10,10 +10,9 @@ ActiveAdmin.register Snippet do
 
     f.inputs 'Details' do
       f.input :code, as: :text
+      f.input :language, as: :select, collection: Snippet::AVAILABLE_LANGUAGES.map {|lang, attr| lang }
       f.input :status, as: :select, collection: Snippet::available_statuses
       f.input :input, as: :text
-      f.input :output, as: :text
-      f.input :error, as: :text
     end
 
     f.actions
