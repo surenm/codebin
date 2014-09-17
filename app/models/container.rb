@@ -61,10 +61,18 @@ class Container < ActiveRecord::Base
     Docker::Container.get(container_id)
   end
 
-  def create_docker_container
+  def default_run_list
+    ['/bin/run', snippet.executable, docker_file_path("code.#{snippet.extension}")]
+  end
+
+  def create_docker_container(run_list = nil)
+    if run_list.nil?
+      run_list = default_run_list
+    end
+
     _container = Docker::Container.create(
       Image: "codebin/#{snippet.language}",
-      Cmd: ['/bin/run', snippet.executable, docker_file_path("code.#{snippet.extension}")],
+      Cmd: run_list,
       OpenStdin: true,
       StdinOnce: true
     )
