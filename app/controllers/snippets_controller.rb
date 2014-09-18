@@ -45,6 +45,7 @@ class SnippetsController < ApplicationController
   def update
     respond_to do |format|
       if @snippet.update(snippet_params)
+        @snippet.status = Snippet::STATE_QUEUED
         @snippet.output = ""
         @snippet.error = ""
         @snippet.save!

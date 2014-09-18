@@ -33,14 +33,13 @@
       <a class="navbar-brand" href="#">
         <span class="logo">
           Codebin
-          <small> Run your code on the cloud</small> 
+          <small> Run your code on the cloud &nbsp; &nbsp;</small> 
         </span> 
       </a>
     </div>
     <div class="navbar-collapse collapse">
       <ul class="nav navbar-nav navbar-right">
-      <!-- <li class="active"><a href="/snippets/new">+ New Snippet</a></li> -->
-
+      <li class="active"><a href="/snippets/new">+ New Snippet</a></li>
       <% if current_user %>
       <li><a class="signedin" href="#"><img class="dp" src="<%= current_user.dp %>">Hello! <%= current_user.nick %></a></li>
       <% else %>

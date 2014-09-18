@@ -21,5 +21,6 @@
 //= require json2
 //= require underscore-min
 //= require backbone-min
+//= require jquery.blockUI
 
 //= require snippets

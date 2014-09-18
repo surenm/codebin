@@ -1,8 +1,11 @@
-<div class="row">
-  <% @snippets.each do |snippet| %>
-      <%= link_to 'Show', snippet %>
-      <%= link_to 'Edit', edit_snippet_path(snippet) %>
-      <%= link_to 'Destroy', snippet, method: :delete, data: { confirm: 'Are you sure?' } %>
-  <% end %>
+<div class="codebin-area row">
+  <center>
+    <a class="btn btn-lg btn-primary" href="/snippets/new">+ New Snippet</a>
+    <br> <br>
+    <% @snippets.each do |snippet| %>
+    <div class="row well" style="width: 50%">
+        <%= link_to "Snippet #{snippet.id} #{snippet.name}", snippet %>
+    </div>
+    <% end %>
+  </center>
 </div>
-
