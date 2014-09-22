@@ -80,6 +80,14 @@ class Game < ActiveRecord::Base
     copy_game_files(snippet_engine, "#{game_code_path}/engine")
   end
 
+  def player_run_list(snippet)
+    ['/bin/run', snippet.executable, snippet.container.docker_file_path("runner.#{snippet.extension}")]
+  end
+
+  def engine_run_list
+    ['/bin/run', snippet_engine.executable, snippet_engine.container.docker_file_path("game.#{snippet_engine.extension}")]
+  end
+
   def create_files
     return if not ready?
 
@@ -89,5 +97,17 @@ class Game < ActiveRecord::Base
     create_files_for_snippet(snippet_b)
 
     create_files_for_engine()
+  end
+
+  def create_docker_containers
+    snippet_a.container.create_docker_container(player_run_list(snippet_a))
+    snippet_b.container.create_docker_container(player_run_list(snippet_b))
+
+    snippet_engine.container.create_docker_container(engine_run_list)
+  end
+  def destroy_docker_containers
+    snippet_a.container.destroy_docker_container
+    snippet_b.container.destroy_docker_container
+    snippet_engine.container.destroy_docker_container
   end
 end
