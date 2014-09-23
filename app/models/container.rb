@@ -33,6 +33,21 @@ class Container < ActiveRecord::Base
     File.join(host_dir_path, "stderr")
   end
 
+  def input_stream
+    fd = IO.sysopen(input_file_path, 'r')
+    IO.new(fd, 'r')
+  end
+
+  def output_stream
+    fd = IO.sysopen(output_file_path, 'w')
+    IO.new(fd, 'w')
+  end
+
+  def error_stream
+    fd = IO.sysopen(error_file_path, 'w')
+    IO.new(fd, 'w')
+  end
+
   def input
     File.read(input_file_path)
   end
@@ -74,7 +89,7 @@ class Container < ActiveRecord::Base
   def create_docker_container(run_list = nil)
     if run_list.nil?
       run_list = default_run_list
-    end 
+    end
 
     _container = Docker::Container.create(
       Image: "codebin/#{snippet.language}",
@@ -87,17 +102,25 @@ class Container < ActiveRecord::Base
     self.save!
   end
 
-  def run_docker_container(custom_binds = {})
+  def run_docker_container(stdin = input_stream, stdout = output_stream, stderr = error_stream, custom_binds = {})
     binds = ["#{host_dir_path}:#{docker_dir_path}"]
     custom_binds.each do |bind|
       binds.push "#{bind[:host_path]}:#{bind[:docker_path]}"
     end
-    output, error = docker_container.tap {|c| c.start({Binds: binds})}.attach(stdin: StringIO.new(input))
 
-    File.write(output_file_path, output.join)
-    File.write(error_file_path, error.join)
-    snippet.output = output.join
-    snippet.error = error.join
+    docker_container.tap {|c| c.start({Binds: binds})}.attach(stdin: stdin) do |stream, chunk|
+      if stream == :stdout
+        stdout << chunk
+      else
+        stderr << chunk
+      end
+    end
+
+    stdout.flush()
+    stderr.flush()
+
+    snippet.output = output
+    snippet.error = error
     snippet.save!
   end
 
