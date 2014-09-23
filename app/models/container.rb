@@ -52,11 +52,15 @@ class Container < ActiveRecord::Base
     File.write host_file_path(file_name), code
   end
 
-  def create_files
-    create_host_file("code.#{snippet.extension}", snippet.code)
+  def create_io_files
     FileUtils.touch input_file_path
     FileUtils.touch output_file_path
     FileUtils.touch error_file_path
+  end
+
+  def create_files
+    create_host_file("code.#{snippet.extension}", snippet.code)
+    create_io_files
   end
 
   def docker_container
@@ -70,7 +74,7 @@ class Container < ActiveRecord::Base
   def create_docker_container(run_list = nil)
     if run_list.nil?
       run_list = default_run_list
-    end
+    end 
 
     _container = Docker::Container.create(
       Image: "codebin/#{snippet.language}",

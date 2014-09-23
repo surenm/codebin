@@ -70,6 +70,7 @@ class Game < ActiveRecord::Base
 
     # Create user submitted code in container
     snippet.container.create_host_file("player.#{snippet.extension}", snippet.code)
+    snippet.container.create_io_files
   end
 
   def create_files_for_engine()
@@ -77,7 +78,8 @@ class Game < ActiveRecord::Base
       Snippet.create! name: snippet_name, language: :python, game: self
     end
 
-    copy_game_files(snippet_engine, "#{game_code_path}/engine")
+    copy_game_files(snippet_engine, "#{game_code_path}/hexgame")
+    snippet_engine.container.create_io_files
   end
 
   def player_run_list(snippet)
@@ -105,9 +107,18 @@ class Game < ActiveRecord::Base
 
     snippet_engine.container.create_docker_container(engine_run_list)
   end
-  def destroy_docker_containers
-    snippet_a.container.destroy_docker_container
-    snippet_b.container.destroy_docker_container
-    snippet_engine.container.destroy_docker_container
+
+  def run_docker_containers
+    container_threads = Array.new
+    container_threads << Thread.new { snippet_a.container.run_docker_container }
+    container_threads << Thread.new { snippet_b.container.run_docker_container }
+
+    container_threads.each { |thread| thread.join }
+  end
+
+  def destroy_docker_containers!
+    snippet_a.container.destroy_docker_container!
+    snippet_b.container.destroy_docker_container!
+    snippet_engine.container.destroy_docker_container!
   end
 end
