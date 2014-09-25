@@ -107,7 +107,6 @@ class Container < ActiveRecord::Base
     custom_binds.each do |bind|
       binds.push "#{bind[:host_path]}:#{bind[:docker_path]}"
     end
-
     docker_container.tap {|c| c.start({Binds: binds})}.attach(stdin: stdin) do |stream, chunk|
       if stream == :stdout
         stdout << chunk
@@ -115,9 +114,11 @@ class Container < ActiveRecord::Base
         stderr << chunk
       end
     end
-
     stdout.flush()
     stderr.flush()
+
+    puts output
+    puts error
 
     snippet.output = output
     snippet.error = error

@@ -87,7 +87,7 @@ class Game < ActiveRecord::Base
   end
 
   def engine_run_list
-    ['/bin/run', snippet_engine.executable, snippet_engine.container.docker_file_path("game.#{snippet_engine.extension}")]
+    ['/bin/run', snippet_engine.executable, snippet_engine.container.docker_file_path("connector.#{snippet_engine.extension}")]
   end
 
   def create_files
