@@ -89,7 +89,18 @@ class Game < ActiveRecord::Base
   end
 
   def engine_run_list
-    ['/bin/run', snippet_engine.executable, snippet_engine.container.docker_file_path("connector.#{snippet_engine.extension}")]
+    ['/bin/run', 
+      snippet_engine.executable,
+      snippet_engine.container.docker_file_path("connector.#{snippet_engine.extension}"),
+      '--a_ord',
+      '/player_a/orders.txt',
+      '--b_ord',
+      '/player_b/orders.txt',
+      '--a_state',
+      '/player_a/state.txt',
+      '--b_state',
+      '/player_b/state.txt',
+    ]
   end
 
   def create_files
@@ -114,6 +125,14 @@ class Game < ActiveRecord::Base
     container_threads = Array.new
     container_threads << Thread.new { snippet_a.container.run_docker_container }
     container_threads << Thread.new { snippet_b.container.run_docker_container }
+
+
+    engine_extra_mount_binds = [
+      {host_path: snippet_a.container.host_dir_path, docker_path: "/player_a" },
+      {host_path: snippet_b.container.host_dir_path, docker_path: "/player_b" },
+    ]
+
+    container_threads << Thread.new { snippet_engine.container.run_docker_container(engine_extra_mount_binds) }
 
     container_threads.each { |thread| thread.join }
   end

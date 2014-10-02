@@ -102,7 +102,7 @@ class Container < ActiveRecord::Base
     self.save!
   end
 
-  def run_docker_container(stdin = input_stream, stdout = output_stream, stderr = error_stream, custom_binds = {})
+  def run_docker_container(custom_binds = [], stdin = input_stream, stdout = output_stream, stderr = error_stream)
     binds = ["#{host_dir_path}:#{docker_dir_path}"]
     custom_binds.each do |bind|
       binds.push "#{bind[:host_path]}:#{bind[:docker_path]}"
@@ -116,9 +116,6 @@ class Container < ActiveRecord::Base
     end
     stdout.flush()
     stderr.flush()
-
-    puts output
-    puts error
 
     snippet.output = output
     snippet.error = error
