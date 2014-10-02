@@ -70,7 +70,9 @@ class Game < ActiveRecord::Base
 
     # Create user submitted code in container
     snippet.container.create_host_file("player.#{snippet.extension}", snippet.code)
-    snippet.container.create_io_files
+    snippet.container.create_host_file("orders.txt", ())
+    snippet.container.create_host_file("state.txt", ())
+    snippet.container.create_io_files()
   end
 
   def create_files_for_engine()
@@ -83,7 +85,7 @@ class Game < ActiveRecord::Base
   end
 
   def player_run_list(snippet)
-    ['/bin/run', snippet.executable, snippet.container.docker_file_path("runner.#{snippet.extension}")]
+    ['/bin/run', snippet.executable, snippet.container.docker_file_path("player.#{snippet.extension}"), snippet.container.docker_file_path("state.txt"), snippet.container.docker_file_path("orders.txt")]
   end
 
   def engine_run_list
